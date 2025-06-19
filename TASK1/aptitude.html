@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="quiz.css" />
+</head>
+<style>
+    body{
+  background-image: url('quaimg.jpg'); /* Replace with your image path */
+  background-size: cover;     /* Cover whole screen, scale image */
+  background-position: center center; /* Center image */
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Optional: make background fixed on scroll */
+  background-color: #0d05f7e0; /* Fallback color */
+  color: #faf6f6ea;
+  
+    }
+  </style>
+<body>
+  <h3>Aptitude Quiz</h3>
+  <form id="quizForm"></form>
+  <button id="submit-button" onclick="submitQuiz()">Submit</button>
+  <div id="resultContainer"></div>
+  <h2 id="score"></h2>
+
+  <script>
+    const questions = [
+      {
+        "questionText": "What is the next prime number after 7?",
+        "options": ["9", "11", "10", "13"],
+        "correctAnswer": "11",
+        "explanation": "The prime number after 7 is 11"
+      },
+      {
+        "questionText": "A shopkeeper sells an item at ₹240 after a 20% discount. What was the original price?",
+        "options": ["₹300", "₹250", "₹280", "₹270"],
+        "correctAnswer": "₹300",
+        "explanation": "Let original price be x. Then, x - 20% of x = 240 → 0.8x = 240 → x = 300"
+      },
+      {
+        "questionText": "The average of 2, 4, 6, 8, 10 is:",
+        "options": ["5", "6", "7", "8"],
+        "correctAnswer": "6",
+        "explanation": "Sum = 30 → Average = 30 / 5 = 6"
+      },
+      {
+        "questionText": "If 12 men can complete a job in 10 days, how many days will 8 men take?",
+        "options": ["15", "12", "18", "10"],
+        "correctAnswer": "15",
+        "explanation": "Work = Men × Days → 12×10 = 8×x → x = 120 / 8 = 15"
+      },
+      {
+        "questionText": "A train travels 120 km in 2 hours. What is its speed?",
+        "options": ["60 km/h", "40 km/h", "50 km/h", "70 km/h"],
+        "correctAnswer": "60 km/h",
+        "explanation": "Speed = Distance / Time = 120 / 2 = 60 km/h"
+      },
+      {
+        "questionText": "What is the simple interest on ₹1000 at 5% per annum for 2 years?",
+        "options": ["₹100", "₹110", "₹120", "₹150"],
+        "correctAnswer": "₹100",
+        "explanation": "SI = (P×R×T)/100 = (1000×5×2)/100 = ₹100"
+      },
+      {
+        "questionText": "If a car runs at 60 km/h, how much time will it take to travel 180 km?",
+        "options": ["2 hrs", "2.5 hrs", "3 hrs", "4 hrs"],
+        "correctAnswer": "3 hrs",
+        "explanation": "Time = Distance / Speed = 180 / 60 = 3 hours"
+      },
+      {
+        "questionText": "The LCM of 6 and 8 is:",
+        "options": ["24", "48", "16", "12"],
+        "correctAnswer": "24",
+        "explanation": "Multiples of 6: 6,12,18,24... and 8: 8,16,24... ⇒ LCM = 24"
+      },
+      {
+        "questionText": "What is the square of 13?",
+        "options": ["159", "169", "149", "179"],
+        "correctAnswer": "169",
+        "explanation": "13 × 13 = 169"
+      },
+      {
+        "questionText": "A bag has 3 red balls and 2 green balls. Probability of drawing a green ball is:",
+        "options": ["1/5", "2/5", "3/5", "1/2"],
+        "correctAnswer": "2/5",
+        "explanation": "Total = 5, Green = 2 → Probability = 2/5"
+      }
+    ];
+    
+    // Render quiz questions and options on page load
+    document.getElementById("quizForm").innerHTML = questions.map((question, index) =>
+      `<p><b>Question ${index + 1}:</b> ${question.questionText}</p>` +
+      question.options.map(option =>
+        `<label><input type="radio" name="question${index}" value="${option}"> ${option}</label><br>`
+      ).join('')
+    ).join('');
+
+    // Submit quiz and show results
+    function submitQuiz() {
+      let score = 0;
+      const resultsHTML = questions.map((question, index) => {
+        const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+        const isCorrect = selectedOption && selectedOption.value === question.correctAnswer;
+        if (isCorrect) score++;
+        return `<p>${isCorrect ? "✔️" : "❌"} Question ${index + 1}: ${isCorrect ? "Correct!" : "Wrong – Correct answer: " + question.correctAnswer}<br>${question.explanation}</p>`;
+      }).join('');
+      
+      document.getElementById("resultContainer").innerHTML = resultsHTML;
+      document.getElementById("score").textContent = `You scored ${score} out of ${questions.length}`;
+      
+      alert("Quiz was successfully completed, please scroll down to see your score.");
+    }
+  </script>
+</body>
+</html>

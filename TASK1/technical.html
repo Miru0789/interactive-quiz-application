@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="quiz.css" />
+  
+</head>
+<style>
+    body{
+  background-image: url('timg.jpg'); /* Replace with your image path */
+  background-size: cover;     /* Cover whole screen, scale image */
+  background-position: center center; /* Center image */
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Optional: make background fixed on scroll */
+  background-color: #f9f9f9; /* Fallback color */
+  color: hwb(0 96% 2%);
+  
+    }
+  </style>
+<body>
+  <h3>Technical Quiz</h3>
+  <form id="quizForm"></form>
+  <button id="submit-button" onclick="submitQuiz()">Submit</button>
+  <div id="resultContainer"></div>
+  <h2 id="score"></h2>
+
+  <script>
+    const questions = [
+  {
+    "questionText": "Which of the following is a valid variable name in Python?",
+    "options": ["1variable", "_variable", "variable-name", "variable name"],
+    "correctAnswer": "_variable",
+    "explanation": "In Python, variable names can start with letters or underscores but not digits."
+  },
+  {
+    "questionText": "What is the output of the expression: 3 + 2 * 2 in Python?",
+    "options": ["10", "7", "12", "9"],
+    "correctAnswer": "7",
+    "explanation": "Multiplication has higher precedence, so: 3 + (2*2) = 7."
+  },
+  {
+    "questionText": "In C, which symbol is used to denote a pointer?",
+    "options": ["*", "&", "%", "#"],
+    "correctAnswer": "*",
+    "explanation": "The * symbol is used to declare and dereference pointers in C."
+  },
+  {
+    "questionText": "Which of the following is not a keyword in Java?",
+    "options": ["static", "Boolean", "interface", "extends"],
+    "correctAnswer": "Boolean",
+    "explanation": "Java uses 'boolean' (lowercase) as a keyword. 'Boolean' is a class."
+  },
+  {
+    "questionText": "Which Python data structure is immutable?",
+    "options": ["List", "Set", "Tuple", "Dictionary"],
+    "correctAnswer": "Tuple",
+    "explanation": "Tuples are immutable in Python; their values cannot be changed after creation."
+  },
+  {
+    "questionText": "Which of the following is used to comment a single line in JavaScript?",
+    "options": ["/* comment */", "<!-- comment -->", "// comment", "# comment"],
+    "correctAnswer": "// comment",
+    "explanation": "JavaScript uses // for single-line comments."
+  },
+  {
+    "questionText": "What does 'int main()' signify in C?",
+    "options": ["Defines a header file", "Defines the main function", "Starts a loop", "Declares a class"],
+    "correctAnswer": "Defines the main function",
+    "explanation": "'int main()' is the entry point of a C program where execution begins."
+  },
+  {
+    "questionText": "What is the output of: print(type([])) in Python?",
+    "options": ["<class 'list'>", "<type 'list'>", "list", "error"],
+    "correctAnswer": "<class 'list'>",
+    "explanation": "type([]) returns the type of the object, which is 'list'."
+  },
+  {
+    "questionText": "Which method is used to compare two strings in Java?",
+    "options": ["equals()", "==", "compare()", "match()"],
+    "correctAnswer": "equals()",
+    "explanation": "In Java, 'equals()' checks for content equality of strings."
+  },
+  {
+    "questionText": "Which of the following is the correct way to declare an array in C?",
+    "options": ["int arr[5];", "array arr[5];", "int[] arr;", "arr int[5];"],
+    "correctAnswer": "int arr[5];",
+    "explanation": "Arrays in C are declared with the type followed by name and size."
+  }
+];
+    
+    // Render quiz questions and options on page load
+    document.getElementById("quizForm").innerHTML = questions.map((question, index) =>
+      `<p><b>Question ${index + 1}:</b> ${question.questionText}</p>` +
+      question.options.map(option =>
+        `<label><input type="radio" name="question${index}" value="${option}"> ${option}</label><br>`
+      ).join('')
+    ).join('');
+
+    // Submit quiz and show results
+    function submitQuiz() {
+      let score = 0;
+      const resultsHTML = questions.map((question, index) => {
+        const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+        const isCorrect = selectedOption && selectedOption.value === question.correctAnswer;
+        if (isCorrect) score++;
+        return `<p>${isCorrect ? "✔️" : "❌"} Question ${index + 1}: ${isCorrect ? "Correct!" : "Wrong – Correct answer: " + question.correctAnswer}<br>${question.explanation}</p>`;
+      }).join('');
+      
+      document.getElementById("resultContainer").innerHTML = resultsHTML;
+      document.getElementById("score").textContent = `You scored ${score} out of ${questions.length}`;
+      
+      alert("Quiz was successfully completed, please scroll down to see your score.");
+    }
+  </script>
+</body>
+</html>

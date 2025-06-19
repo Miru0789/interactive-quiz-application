@@ -1,0 +1,18 @@
+h3{
+    border-style: inset;
+}
+
+body{
+    text-align: center;
+    background-image: url('ima1.png'); /* Replace with your image path */
+  background-size: cover;     /* Cover whole screen, scale image */
+  background-position: center center; /* Center image */
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Optional: make background fixed on scroll */
+  background-color: #f9f9f9; /* Fallback color */
+  color: rgb(220, 227, 234);
+}
+a{
+    text-decoration: none;
+    color: rgb(220, 227, 234);
+  }

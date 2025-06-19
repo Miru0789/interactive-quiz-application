@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="quiz.css" />
+</head>
+<style>
+    body{
+  background-image: url('logimg2.jpg'); /* Replace with your image path */
+  background-size: cover;     /* Cover whole screen, scale image */
+  background-position: center center; /* Center image */
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Optional: make background fixed on scroll */
+  background-color: #f9f9f9; /* Fallback color */
+  color: lab(3.86% 1 0.35);
+  
+    }
+  </style>
+<body>
+  <h3>Logical Quiz</h3>
+  <form id="quizForm"></form>
+  <button id="submit-button" onclick="submitQuiz()">Submit</button>
+  <div id="resultContainer"></div>
+  <h2 id="score"></h2>
+
+  <script>
+    const questions =[
+  {
+    "questionText": "If all Bloops are Razzies and all Razzies are Lazzies, then all Bloops are definitely Lazzies?",
+    "options": ["True", "False", "Cannot be determined", "None of the above"],
+    "correctAnswer": "True",
+    "explanation": "This is a classic syllogism. If A ⊆ B and B ⊆ C, then A ⊆ C."
+  },
+  {
+    "questionText": "Find the missing number in the series: 2, 6, 12, 20, ?, 42",
+    "options": ["30", "28", "32", "36"],
+    "correctAnswer": "30",
+    "explanation": "The pattern is +4, +6, +8, +10, so next is 20 + 10 = 30."
+  },
+  {
+    "questionText": "What comes next in the sequence: 1, 4, 9, 16, 25, ?",
+    "options": ["36", "30", "49", "40"],
+    "correctAnswer": "36",
+    "explanation": "These are perfect squares: 1², 2², 3², ..., so next is 6² = 36."
+  },
+  {
+    "questionText": "Which word does NOT belong with the others?",
+    "options": ["Apple", "Banana", "Carrot", "Grapes"],
+    "correctAnswer": "Carrot",
+    "explanation": "All others are fruits; carrot is a vegetable."
+  },
+  {
+    "questionText": "John is twice as old as Mary. Five years ago, John was three times as old as Mary. How old is Mary now?",
+    "options": ["5", "10", "15", "20"],
+    "correctAnswer": "10",
+    "explanation": "Let Mary's age be x. Then John's is 2x. 5 years ago: 2x-5 = 3(x-5) → x = 10."
+  },
+  {
+    "questionText": "If some Smibs are Smobs and all Smobs are Smebs, then some Smibs are definitely Smebs?",
+    "options": ["True", "False", "Cannot be determined", "None of the above"],
+    "correctAnswer": "Cannot be determined",
+    "explanation": "We don’t know if the Smibs that are Smobs form the same group."
+  },
+  {
+    "questionText": "What is the next number in the pattern: 3, 6, 11, 18, 27, ?",
+    "options": ["36", "38", "40", "42"],
+    "correctAnswer": "38",
+    "explanation": "The differences are +3, +5, +7, +9, so next is 27 + 11 = 38."
+  },
+  {
+    "questionText": "Choose the odd one out:",
+    "options": ["Circle", "Triangle", "Square", "Rectangle"],
+    "correctAnswer": "Circle",
+    "explanation": "Circle has no sides; the others are polygons with straight sides."
+  },
+  {
+    "questionText": "If today is Monday, what day will it be 45 days from now?",
+    "options": ["Wednesday", "Thursday", "Friday", "Saturday"],
+    "correctAnswer": "Thursday",
+    "explanation": "45 ÷ 7 = 6 remainder 3. So 3 days from Monday = Thursday."
+  },
+  {
+    "questionText": "A is B’s father’s brother. C is B’s cousin. How is A related to C?",
+    "options": ["Father", "Uncle", "Brother", "Cousin"],
+    "correctAnswer": "Uncle",
+    "explanation": "A is B’s uncle, and C is B’s cousin, so A is also C’s uncle."
+  }
+];
+    
+    // Render quiz questions and options on page load
+    document.getElementById("quizForm").innerHTML = questions.map((question, index) =>
+      `<p><b>Question ${index + 1}:</b> ${question.questionText}</p>` +
+      question.options.map(option =>
+        `<label><input type="radio" name="question${index}" value="${option}"> ${option}</label><br>`
+      ).join('')
+    ).join('');
+
+    // Submit quiz and show results
+    function submitQuiz() {
+      let score = 0;
+      const resultsHTML = questions.map((question, index) => {
+        const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+        const isCorrect = selectedOption && selectedOption.value === question.correctAnswer;
+        if (isCorrect) score++;
+        return `<p>${isCorrect ? "✔️" : "❌"} Question ${index + 1}: ${isCorrect ? "Correct!" : "Wrong – Correct answer: " + question.correctAnswer}<br>${question.explanation}</p>`;
+      }).join('');
+      
+      document.getElementById("resultContainer").innerHTML = resultsHTML;
+      document.getElementById("score").textContent = `You scored ${score} out of ${questions.length}`;
+      
+      alert("Quiz was successfully completed, please scroll down to see your score.");
+    }
+  </script>
+</body>
+</html>

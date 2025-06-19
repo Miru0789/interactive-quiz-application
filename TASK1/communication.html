@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="quiz.css" />
+</head>
+<style>
+  body{
+    
+    background-image: url('img1.webp'); /* Replace with your image path */
+  background-size: cover;     /* Cover whole screen, scale image */
+  background-position: center center; /* Center image */
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Optional: make background fixed on scroll */
+  background-color: #f9f9f9; /* Fallback color */
+  color: hwb(280 1% 78% / 0.811);
+}
+</style>
+<body>
+  <h3>Communication Quiz</h3>
+  <form id="quizForm"></form>
+  <button id="submit-button" onclick="submitQuiz()">Submit</button>
+  <div id="resultContainer"></div>
+  <h2 id="score"></h2>
+
+  <script>
+    const questions = [
+  {
+    "questionText": "Choose the correct sentence.",
+    "options": ["She don't like pizza.", "She doesn't likes pizza.", "She doesn't like pizza.", "She not like pizza."],
+    "correctAnswer": "She doesn't like pizza.",
+    "explanation": "'Doesn't' is followed by the base form of the verb — 'like'."
+  },
+  {
+    "questionText": "Identify the correctly punctuated sentence.",
+    "options": ["Lets eat Grandma!", "Let's eat, Grandma!", "Lets eat, Grandma!", "Let's eat Grandma!"],
+    "correctAnswer": "Let's eat, Grandma!",
+    "explanation": "The comma after 'eat' clarifies the sentence, avoiding confusion with eating Grandma!"
+  },
+  {
+    "questionText": "Fill in the blank: Neither the manager nor the employees _____ available.",
+    "options": ["was", "were", "are", "is"],
+    "correctAnswer": "were",
+    "explanation": "When 'neither...nor' joins a singular and plural subject, the verb agrees with the subject closest to it — 'employees'."
+  },
+  {
+    "questionText": "Which of the following is a compound sentence?",
+    "options": ["He came late.", "He came late and missed the meeting.", "He came late, so he missed the meeting.", "Coming late, he missed the meeting."],
+    "correctAnswer": "He came late, so he missed the meeting.",
+    "explanation": "A compound sentence joins two independent clauses with a coordinating conjunction."
+  },
+  {
+    "questionText": "Choose the correct word: I will ____ the prize with my friend.",
+    "options": ["share", "shear", "shar", "shair"],
+    "correctAnswer": "share",
+    "explanation": "'Share' means to divide or give a portion to others — the correct word for this context."
+  },
+  {
+    "questionText": "What is the antonym of 'vague'?",
+    "options": ["Clear", "Blurred", "Soft", "Simple"],
+    "correctAnswer": "Clear",
+    "explanation": "'Vague' means unclear; its antonym is 'clear'."
+  },
+  {
+    "questionText": "Choose the correct preposition: She is good ___ singing.",
+    "options": ["at", "in", "on", "with"],
+    "correctAnswer": "at",
+    "explanation": "The correct preposition for 'good' when referring to a skill is 'at'."
+  },
+  {
+    "questionText": "Select the sentence with correct subject-verb agreement.",
+    "options": ["The list of items are on the desk.", "The list of items is on the desk.", "The lists of item is on the desk.", "The item list are on the desk."],
+    "correctAnswer": "The list of items is on the desk.",
+    "explanation": "The subject is 'list', which is singular, so the verb should be 'is'."
+  },
+  {
+    "questionText": "Fill in the blank with the correct article: She adopted ___ cat from the shelter.",
+    "options": ["a", "an", "the", "no article"],
+    "correctAnswer": "a",
+    "explanation": "'Cat' begins with a consonant sound, so 'a' is the correct article."
+  },
+  {
+    "questionText": "Choose the correctly spelled word.",
+    "options": ["Recieve", "Receive", "Recive", "Receeve"],
+    "correctAnswer": "Receive",
+    "explanation": "The correct spelling follows the 'i before e except after c' rule."
+  }
+];
+    
+    // Render quiz questions and options on page load
+    document.getElementById("quizForm").innerHTML = questions.map((question, index) =>
+      `<p><b>Question ${index + 1}:</b> ${question.questionText}</p>` +
+      question.options.map(option =>
+        `<label><input type="radio" name="question${index}" value="${option}"> ${option}</label><br>`
+      ).join('')
+    ).join('');
+
+    // Submit quiz and show results
+    function submitQuiz() {
+      let score = 0;
+      const resultsHTML = questions.map((question, index) => {
+        const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+        const isCorrect = selectedOption && selectedOption.value === question.correctAnswer;
+        if (isCorrect) score++;
+        return `<p>${isCorrect ? "✔️" : "❌"} Question ${index + 1}: ${isCorrect ? "Correct!" : "Wrong – Correct answer: " + question.correctAnswer}<br>${question.explanation}</p>`;
+      }).join('');
+      
+      document.getElementById("resultContainer").innerHTML = resultsHTML;
+      document.getElementById("score").textContent = `You scored ${score} out of ${questions.length}`;
+      
+      alert("Quiz was successfully completed, please scroll down to see your score.");
+    }
+  </script>
+</body>
+</html>

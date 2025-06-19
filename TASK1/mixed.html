@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="quiz.css" />
+</head>
+<style>
+    body{
+  background-image: url('miximg.webp'); /* Replace with your image path */
+  background-size: cover;     /* Cover whole screen, scale image */
+  background-position: center center; /* Center image */
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Optional: make background fixed on scroll */
+  background-color: #f9f9f9; /* Fallback color */
+  color: lab(3.86% 1 0.35);
+  
+    }
+  </style>
+<body>
+  <h3>Quiz</h3>
+  <form id="quizForm"></form>
+  <button id="submit-button" onclick="submitQuiz()">Submit</button>
+  <div id="resultContainer"></div>
+  <h2 id="score"></h2>
+
+  <script>
+    const questions = [
+  {
+    "questionText": "What is the next number in the series: 2, 4, 8, 16, ?",
+    "options": ["18", "24", "32", "20"],
+    "correctAnswer": "32",
+    "explanation": "Each number is multiplied by 2. So, 16 × 2 = 32."
+  },
+  {
+    "questionText": "Choose the correctly punctuated sentence.",
+    "options": [
+      "Lets eat Grandma!",
+      "Let’s eat, Grandma!",
+      "Lets eat, Grandma!",
+      "Let’s eat Grandma!"
+    ],
+    "correctAnswer": "Let’s eat, Grandma!",
+    "explanation": "Comma after 'eat' separates the statement from directly addressing Grandma."
+  },
+  {
+    "questionText": "If 5x = 3x + 10, what is the value of x?",
+    "options": ["5", "10", "15", "20"],
+    "correctAnswer": "5",
+    "explanation": "5x - 3x = 10 → 2x = 10 → x = 5."
+  },
+  {
+    "questionText": "Which of the following is a palindrome?",
+    "options": ["1234", "abba", "apple", "robot"],
+    "correctAnswer": "abba",
+    "explanation": "A palindrome reads the same forwards and backwards. 'abba' does."
+  },
+  {
+    "questionText": "Which keyword is used to define a class in Python?",
+    "options": ["class", "struct", "object", "define"],
+    "correctAnswer": "class",
+    "explanation": "'class' is the keyword used to define a class in Python."
+  },
+  {
+    "questionText": "Choose the most effective sentence:",
+    "options": [
+      "She speak fluently English.",
+      "She speaks English fluently.",
+      "She fluently speaks English.",
+      "She English fluently speaks."
+    ],
+    "correctAnswer": "She speaks English fluently.",
+    "explanation": "Correct subject-verb agreement and adverb placement."
+  },
+  {
+    "questionText": "Which number is odd among: 2, 4, 9, 8, 6?",
+    "options": ["2", "4", "9", "6"],
+    "correctAnswer": "9",
+    "explanation": "Only 9 is an odd number; the others are even."
+  },
+  {
+    "questionText": "What does HTML stand for?",
+    "options": [
+      "Hyper Text Markup Language",
+      "HighText Machine Language",
+      "Hyper Tabular Mark Language",
+      "None of these"
+    ],
+    "correctAnswer": "Hyper Text Markup Language",
+    "explanation": "HTML stands for Hyper Text Markup Language."
+  },
+  {
+    "questionText": "What is the average of 10, 20, 30, 40, 50?",
+    "options": ["30", "35", "25", "40"],
+    "correctAnswer": "30",
+    "explanation": "(10+20+30+40+50)/5 = 150/5 = 30."
+  },
+  {
+    "questionText": "What is the antonym of 'generous'?",
+    "options": ["Kind", "Selfish", "Friendly", "Humble"],
+    "correctAnswer": "Selfish",
+    "explanation": "'Generous' means giving; its opposite is 'selfish'."
+  }
+];
+    
+    // Render quiz questions and options on page load
+    document.getElementById("quizForm").innerHTML = questions.map((question, index) =>
+      `<p><b>Question ${index + 1}:</b> ${question.questionText}</p>` +
+      question.options.map(option =>
+        `<label><input type="radio" name="question${index}" value="${option}"> ${option}</label><br>`
+      ).join('')
+    ).join('');
+
+    // Submit quiz and show results
+    function submitQuiz() {
+      let score = 0;
+      const resultsHTML = questions.map((question, index) => {
+        const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+        const isCorrect = selectedOption && selectedOption.value === question.correctAnswer;
+        if (isCorrect) score++;
+        return `<p>${isCorrect ? "✔️" : "❌"} Question ${index + 1}: ${isCorrect ? "Correct!" : "Wrong – Correct answer: " + question.correctAnswer}<br>${question.explanation}</p>`;
+      }).join('');
+      
+      document.getElementById("resultContainer").innerHTML = resultsHTML;
+      document.getElementById("score").textContent = `You scored ${score} out of ${questions.length}`;
+      
+      alert("Quiz was successfully completed, please scroll down to see your score.");
+    }
+  </script>
+</body>
+</html>
